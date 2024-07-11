@@ -1,6 +1,10 @@
 package server
 
-import "github.com/labstack/echo/v4"
+import (
+	"e-commer/infrastructure/entrypoint/server/routes"
+
+	"github.com/labstack/echo/v4"
+)
 
 type Server struct{}
 
@@ -12,9 +16,7 @@ func NewServer() *Server {
 func (s *Server) Run() error {
 	app := echo.New()
 
-	app.GET("/", func(c echo.Context) error {
-		return c.String(200, "Hello, World!")
-	})
+	routes.Init(app)
 
 	return app.Start(":8080")
 }
