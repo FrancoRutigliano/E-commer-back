@@ -1,9 +1,20 @@
 package products
 
-import "github.com/labstack/echo/v4"
+import (
+	"e-commer/pkg/useCases/products"
+	productUseCase "e-commer/pkg/useCases/products"
 
-func Init(g *echo.Group) {
-	g.GET("/all", echo.HandlerFunc(func(c echo.Context) error {
-		return c.JSON(200, echo.Map{"message": "all products"})
-	}))
+	"github.com/labstack/echo/v4"
+)
+
+type PostRoute struct {
+	Handler products.Handler
+}
+
+func InitPost(g *echo.Group, h productUseCase.Handler) {
+	var p PostRoute
+
+	p.Handler = h
+
+	g.POST("/new", p.CreateProduct)
 }
